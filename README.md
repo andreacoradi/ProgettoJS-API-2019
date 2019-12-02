@@ -17,10 +17,10 @@ Elenco partecipanti
 
 ## Ruoli
 
-* PROJECT_MANAGER = 
-* DOCUMENTAZIONE = 
-* CODING JS
-* CODING UI
+* PROJECT_MANAGER = Abeni Alessio
+* DOCUMENTAZIONE = Domenico Libri
+* CODING JS = Andrea Coradi
+* CODING UI = Abeni Alessio, Domenico Libri, Andrea Coradi
 
 ## Regolamento
 * Ogni gruppo consegnerà il link ad un repository GIT che sarà un fork di questo progetto.

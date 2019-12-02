@@ -1,3 +1,14 @@
 #mapid { 
-  height: 90vh;
+  height: 100vh;
+}
+
+#inputField {
+  width: 20%;
+}
+
+#earthquakesCount {
+  /* TODO:
+     - 
+  */
+  
 }
