@@ -13,14 +13,14 @@ Ogni gruppo definisce un titolo progetto (< 100 caratteri) e una descrizione( <5
 
 
 ## Partecipanti
-Elenco partecipanti
+Andrea Coradi,Alessio Abeni,Domenico Libri
 
 ## Ruoli
 
-* PROJECT_MANAGER = 
-* DOCUMENTAZIONE = 
-* CODING JS
-* CODING UI
+* PROJECT_MANAGER = Abeni Alessio
+* DOCUMENTAZIONE = Domenico Libri
+* CODING JS = Andrea Coradi
+* CODING UI = Abeni Alessio, Domenico Libri, Andrea Coradi
 
 ## Regolamento
 * Ogni gruppo consegnerà il link ad un repository GIT che sarà un fork di questo progetto.
