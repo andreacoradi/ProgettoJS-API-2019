@@ -1,23 +1,8 @@
 const inputField = document.getElementById("inputField")
-/*const startDate = document.getElementById("startDate")
-const endDate = document.getElementById("endDate")*/
 const earthquakesCount = document.getElementById("earthquakesCount")
 const listaInfo = document.getElementById("listaInfo")
 
 const defaultZoom = 3
-
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate()
-
-var today = new Date();
-   var d = (today.getDate() < 10 ? '0' : '' )+ today.getDate();
-   var m = ((today.getMonth() + 1) < 10 ? '0' :'') + (today.getMonth() + 1)
-   var y = today.getFullYear();
-   let endTime = String(y+"-"+m+"-"+d); 
-   let startTime = String(y+"-"+String(m-1)+"-"+d); 
-
-/*endDate.value = endTime
-startDate.value = startTime*/
 
 var map = L.map('mapid').setView([15, 5], 2);
 map.setMaxBounds(map.getBounds());
@@ -33,19 +18,9 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 
 let terremoti = []
 
-// Contiene le info necessarie da mostrare su schermo
-/*
-  magnitudo
-  luogo d'origine
-  data origine
-  link ad info più dettagliate
-*/
-let info = {}
 let place = ""
 
 const showEarthquakes = () => {
-  //terremoti = []
-  info = {}
   place = ""
   earthquakesCount.innerText = ""
   minMag = parseFloat(inputField.value)
@@ -56,24 +31,14 @@ const showEarthquakes = () => {
   }
   map.setZoom(defaultZoom)
   addToMap(terremoti)
-  
-  
-  /*startTime = startDate.value
-  endTime = endDate.value*/
-
-  /*
-  if(minMag > 0 && ) {
-    LoadData()
-  } else {
-     console.log("FRA")
-  }*/
 }
 
 const updateCount = (num) => {
   earthquakesCount.innerText = "Ci sono stati " + num + " terremoti"
 }
 
-const LoadData = async () => {
+// Carica i dati dei terremoti
+const LoadData = () => {
   if(terremoti.length > 0)
     return
   fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson")
@@ -88,28 +53,38 @@ const LoadData = async () => {
     updateCount(b.metadata.count)
     terremoti = b.features
     addToMap(terremoti)
+  })  
+}
+
+// Carica i dati delle placche tettoniche
+const LoadTecPlates = () => {
+  fetch("https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json")
+  .then(r => r.json())
+  .then(b => {
+    let plateData = b
+    L.geoJSON(plateData, {color: 'orange',weight: 2}).addTo(map)
   })
 }
 
-const displayInfo = (ev) => {
-  console.log(ev)
-}
-
-
-
+/* Creo un gruppo per i marker che 
+   viene usato per raggrupparli se troppo vicino
+ */
 let markers = L.markerClusterGroup({
-  maxClusterRadius: 50
+  maxClusterRadius: 20
 });
 
 let icon = L.icon({iconUrl: 'earfquake.png',  iconSize: [38, 38]})
 
+// Creo un layer esclusivamente per i marker, così posso gestirli meglio
 let markersLayer = new L.LayerGroup()
 
+// Dato un array di terremoti questa funzione li aggiunge alla mappa
 const addToMap = (ter) => {
   if(terremoti.length == 0) {
     LoadData()
     return
   }
+  // Qui controllo se l'utente vuole filtrare per luogo d'origine oppure magnitudo
   if(place != "") {
     console.log(place)
     ter = terremoti.filter(t => {
@@ -120,6 +95,7 @@ const addToMap = (ter) => {
       return t.properties.mag >= minMag
     })
   }
+
   updateCount(ter.length)
   
   markersLayer.clearLayers()
@@ -129,13 +105,12 @@ const addToMap = (ter) => {
     let props = t.properties
     let utcMilliseconds = props.time // Sono i millisecondi questi
     let humanReadableDate = new Date(utcMilliseconds) // Li trasformo in una data normale
-    info[latLon] = {mag: props.mag, place: props.place, time: humanReadableDate, url: props.url} // Creo una Map dove posso ottenere le info del terremoto usando come chiave le coordinate
 
     let marker = L.marker(latLon, {icon: icon}) 
 
-    //let marker = L.circleMarker(latLon, {radius: props.mag * map.getZoom()})
     if(props && props.title)
       marker.bindTooltip(props.title)
+    // Creo il popup che verrà mostrato alla pressione del click su di un marker
     let popupContent = "<p>Magnitudo: " + props.mag + "</p>"
     popupContent+= "<p>Luogo: " + props.place + "</p>"
     popupContent += "<p>Data: " + humanReadableDate + "</p>"
@@ -143,23 +118,20 @@ const addToMap = (ter) => {
     if(!popupContent) 
       marker.openTooltip()
     
-    
-    let content = props.title
     marker.on('click', function(ev) {
       if(marker.isPopupOpen()) {
         marker.closeTooltip()
       }
-      
-      let t = ev.latlng
-      let key = [t.lat, t.lng]
-      // Qua ottengo le info per il terremoto selezionato
-      console.log(info[key])
     });
     markers.addLayer(marker)
   })
   map.addLayer(markers);
 }
 
+// Carichiamo i dati dei terremoti
 LoadData()
+// Carichiamo i dati delle placce tettoniche
+LoadTecPlates()
+// Mostriamo tutto su schermo
 showEarthquakes()
 

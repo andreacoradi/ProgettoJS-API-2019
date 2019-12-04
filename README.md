@@ -13,7 +13,7 @@ Ogni gruppo definisce un titolo progetto (< 100 caratteri) e una descrizione( <5
 
 
 ## Partecipanti
-Elenco partecipanti
+Andrea Coradi,Alessio Abeni,Domenico Libri
 
 ## Ruoli
 
