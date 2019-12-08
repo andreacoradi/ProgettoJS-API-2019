@@ -20,15 +20,25 @@ let terremoti = []
 
 let place = ""
 
+let minMag
+
 const showEarthquakes = () => {
   place = ""
   earthquakesCount.innerText = ""
-  minMag = parseFloat(inputField.value)
-  // Se nel campo di input non ho inserito un numero...
-  if(isNaN(minMag)) {
-    place = inputField.value
-    minMag = 0
-  }
+  let text = inputField.value.split(" ")
+  
+  // Divido la stringa in "parole" e controllo se una di queste possa essere considerata un float,
+  // ovvero il mio magnitudo
+  text.forEach(word => {
+    if(isNaN(word)) {
+      place += " " + word
+    } else {
+      minMag = parseFloat(word)
+    }
+  })
+
+  place = place.trim()
+  
   map.setZoom(defaultZoom)
   addToMap(terremoti)
 }
@@ -90,8 +100,10 @@ const addToMap = (ter) => {
     ter = terremoti.filter(t => {
       return t.properties.place.toLowerCase().includes(place.toLocaleLowerCase())
     })
-  } else if(minMag > 0) {
-    ter = terremoti.filter(t => {
+  } 
+  
+  if(minMag > 0) {
+    ter = ter.filter(t => {
       return t.properties.mag >= minMag
     })
   }
