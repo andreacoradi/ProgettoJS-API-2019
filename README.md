@@ -1,6 +1,4 @@
-# Scheletro per i lavori di gruppo
-
-## Titolo progetto 
+## Earfquake.js
 
 Ogni gruppo definisce un titolo progetto (< 100 caratteri) e una descrizione( <5000 parole)
 

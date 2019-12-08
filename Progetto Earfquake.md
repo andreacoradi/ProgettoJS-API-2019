@@ -47,8 +47,11 @@ Javascript è un linguaggio di programmazione web come il precedente ma utilizza
 
 1.4 **Riferimenti**
 
-Per l'utlizzo delle API per l'utilizzo della mappa abbiamo utilizzato questo sito:
-https://earthquake.usgs.gov/
+Per ottenere informazioni sui terremoti abbiamo utilizzato l'API di questo sito:
+https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
+
+Abbiamo ottenuto informazioni sulle placche tettoniche tramite il geoJSON disponibile presso:
+https://github.com/fraxen/tectonicplates/
 
 Abbiamo utilizzato inoltre una libreria per lavorare sulla mappa resa disponibile
 da: https://leafletjs.com/
@@ -56,8 +59,6 @@ da: https://leafletjs.com/
 Altri link che ci sono stati utili:
 https://github.com/public-apis/public-apis
 https://www.programmableweb.com/apis/directory
-https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php
-openweathermap: https://openweathermap.org/api
 
 2. **Descrizione generale**
 
@@ -68,9 +69,9 @@ Il prodotto può essere utilizzato in totale autonomia, dotato però di connessi
 2.2 **Funzionalità del prodotto**
 
 Il progetto Earfquake.js deve:
-- Visualizzare tutti i terremoti avvenuti negli ultmi 7 giorni;
-- Permettere uno zoom e dezoom sulla mappa;
-- Permettere la scelta di visualizzare i terremoti solo di una certa densità;
+- Visualizzare tutti i terremoti avvenuti negli ultimi 7 giorni;
+- Permettere di controllare lo zoom sulla mappa;
+- Permettere la scelta di visualizzare i terremoti solo di una certa intensità;
 - Permettere la scelta di visualizzare i terremoti solo di un certo luogo;
 - Permettere la visione delle placche tettoniche;
 - Permettere un utilizzo User-Friendly;
