@@ -4,8 +4,8 @@ const listaInfo = document.getElementById("listaInfo")
 
 const defaultZoom = 3
 
-var map = L.map('mapid').setView([15, 5], 2);
-map.setMaxBounds(map.getBounds());
+var map = L.map('mapid').setView([15, 5], 2)
+map.setMaxBounds(map.getBounds())
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'EARFQUAKE&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -14,22 +14,36 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
     noWrap: true,
     id: 'mapbox.streets',
     accessToken: 'pk.eyJ1IjoiYWNvcmFkIiwiYSI6ImNrM2U2bGxtZDFjdGozY3F0OGJ0cWtjaHEifQ.WGaxrSqR_XOs3_4EBmUTaA'
-}).addTo(map);
+}).addTo(map)
 
 let terremoti = []
 
 let place = ""
 
+let minMag
+
 const showEarthquakes = () => {
+  let prev_place = place
   place = ""
   earthquakesCount.innerText = ""
-  minMag = parseFloat(inputField.value)
-  // Se nel campo di input non ho inserito un numero...
-  if(isNaN(minMag)) {
-    place = inputField.value
-    minMag = 0
-  }
-  map.setZoom(defaultZoom)
+  let text = inputField.value.split(" ")
+  
+  /*Divido la stringa in "parole" e controllo se una di 
+    queste possa essere considerata un float,
+    ovvero il mio magnitudo
+  */
+  text.forEach(word => {
+    if(isNaN(word)) {
+      place += " " + word
+    } else {
+      minMag = parseFloat(word)
+    }
+  })
+
+  place = place.trim()
+  // Se sto filtrando nella stessa zona lo zoom rimane invariato
+  if(place != prev_place)
+    map.setZoom(defaultZoom)
   addToMap(terremoti)
 }
 
@@ -62,7 +76,8 @@ const LoadTecPlates = () => {
   .then(r => r.json())
   .then(b => {
     let plateData = b
-    L.geoJSON(plateData, {color: 'orange',weight: 2}).addTo(map)
+    L.geoJSON(plateData, {color: 'orange',weight: 2})
+    .addTo(map)
   })
 }
 
@@ -71,7 +86,7 @@ const LoadTecPlates = () => {
  */
 let markers = L.markerClusterGroup({
   maxClusterRadius: 20
-});
+})
 
 let icon = L.icon({iconUrl: 'earfquake.png',  iconSize: [38, 38]})
 
@@ -84,14 +99,15 @@ const addToMap = (ter) => {
     LoadData()
     return
   }
-  // Qui controllo se l'utente vuole filtrare per luogo d'origine oppure magnitudo
+  // Qui controllo se l'utente vuole filtrare per luogo d'origine o per magnitudo
   if(place != "") {
     console.log(place)
     ter = terremoti.filter(t => {
       return t.properties.place.toLowerCase().includes(place.toLocaleLowerCase())
     })
-  } else if(minMag > 0) {
-    ter = terremoti.filter(t => {
+  } 
+  if(minMag > 0) {
+    ter = ter.filter(t => {
       return t.properties.mag >= minMag
     })
   }
@@ -100,6 +116,8 @@ const addToMap = (ter) => {
   
   markersLayer.clearLayers()
   markers.clearLayers()
+
+  // Ottengo le info per ogni terremoto e lo aggiungo ad un nuovo layer della mappa
   ter.forEach(t => {
     let latLon = [t.geometry.coordinates[1], t.geometry.coordinates[0]]
     let props = t.properties
@@ -122,7 +140,7 @@ const addToMap = (ter) => {
       if(marker.isPopupOpen()) {
         marker.closeTooltip()
       }
-    });
+    })
     markers.addLayer(marker)
   })
   map.addLayer(markers);
