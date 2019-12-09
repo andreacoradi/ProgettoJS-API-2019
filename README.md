@@ -1,6 +1,6 @@
 ## Earfquake.js
 
-Ogni gruppo definisce un titolo progetto (< 100 caratteri) e una descrizione( <5000 parole)
+Questa applicazione rende i file geoJSON visibili all'utente finale tramite una grafica semplice ed intuitiva.
 
 
 * https://github.com/public-apis/public-apis

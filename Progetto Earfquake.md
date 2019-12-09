@@ -44,6 +44,7 @@ L'applicazione presenta un interfaccia scritta in HTML, invece le funzionalità 
 
 Il linguaggio HTML(acronimo di:HyperText Markup Language) è un linguaggio di programmazione web usato per la creazione di pagine web.
 Javascript è un linguaggio di programmazione web come il precedente ma utilizzato per la creazione di applicazioni orientate ad oggetti o eventi.
+GeoJSON è un formato aperto utilizzato per archiviare una collezione di geometrie spaziali i cui attributi sono descritti attraverso JavaScript Object Notation (JSON).
 
 1.4 **Riferimenti**
 
@@ -61,6 +62,8 @@ https://github.com/public-apis/public-apis
 https://www.programmableweb.com/apis/directory
 
 2. **Descrizione generale**
+
+Questa applicazione rende i file geoJSON visibili all'utente finale tramite una grafica semplice ed intuitiva.
 
 2.1 **Prospettive del prodotto**
 
@@ -86,7 +89,7 @@ Voler rendere l'applicazione meno confusa e più intuitiva, raggruppando i terre
 
 2.5 **Assunzioni e dipendenze**
 
-Il sistema dipende da una libreria presa da un sito esterno, inoltre anche dalle API, non di google in quanto a pagamento, per tanto di un sito esterno.
+Il sistema dipende dalle API descritte sopra ed usa la libreria Javascript leaflet per mostrare i dati su schermo.
 
 3. **Requisiti specifici**
 
@@ -96,4 +99,5 @@ L'interfaccia utente è il supporto visivo su cui è possibile visualizzare tutt
 
 3.2 **Come selezionare il luogo di interesse e l'intensità del magnitudo**
 
-L'applicazione in alto a sinistra presenta un campo di testo nel quale si può scrivere numericamente l'intensità del magnitudo desiderata, altrimenti la località desiderata,o ambedue assieme per filtrare in maniera completa,con nome completo preferibilmente in quanto per esempio scrivendo CA(California) non uscirannò solo luoghi della California, ma anche luoghi che hanno nel nome CA o iniziano per CA.
+L'applicazione in alto a sinistra presenta un campo di testo nel quale si può scrivere numericamente l'intensità del magnitudo desiderata, altrimenti la località desiderata, o entrambe per filtrare con nome completo. 
+Per esempio scrivendo CA(California) non uscirannò solo luoghi della California, ma anche luoghi che hanno nel nome CA o iniziano per CA.

@@ -23,6 +23,7 @@ let place = ""
 let minMag
 
 const showEarthquakes = () => {
+  let prev_place = place
   place = ""
   earthquakesCount.innerText = ""
   let text = inputField.value.split(" ")
@@ -40,8 +41,9 @@ const showEarthquakes = () => {
   })
 
   place = place.trim()
-  
-  map.setZoom(defaultZoom)
+  // Se sto filtrando nella stessa zona lo zoom rimane invariato
+  if(place != prev_place)
+    map.setZoom(defaultZoom)
   addToMap(terremoti)
 }
 
@@ -74,7 +76,8 @@ const LoadTecPlates = () => {
   .then(r => r.json())
   .then(b => {
     let plateData = b
-    L.geoJSON(plateData, {color: 'orange',weight: 2}).addTo(map)
+    L.geoJSON(plateData, {color: 'orange',weight: 2})
+    .addTo(map)
   })
 }
 
