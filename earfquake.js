@@ -48,7 +48,7 @@ const showEarthquakes = () => {
 }
 
 const updateCount = (num) => {
-  earthquakesCount.innerText = "Ci sono stati " + num + " terremoti"
+  earthquakesCount.innerText = "Ci sono stati " + num + " terremoti negli ultimi 7 giorni"
 }
 
 // Carica i dati dei terremoti
