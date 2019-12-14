@@ -9,7 +9,7 @@
 2. **Descrizione generale**
 2.1 Prospettive del prodotto
 2.2 Funzionalità del prodotto
-2.3 Caratteristche utente
+2.3 Caratteristche utenteInitial Home page
 2.4 Vincoli generali
 2.5 Assunzioni e dipendenze
 3. **Requisiti specifici**

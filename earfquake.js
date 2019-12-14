@@ -42,7 +42,7 @@ const showEarthquakes = () => {
 
   place = place.trim()
   // Se sto filtrando nella stessa zona lo zoom rimane invariato
-  if(place != prev_place)
+  if(place != prev_place && prev_place != "")
     map.setZoom(defaultZoom)
   addToMap(terremoti)
 }
